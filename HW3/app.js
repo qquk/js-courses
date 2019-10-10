@@ -3,17 +3,17 @@
 // Если нет ни одного аргумента, вернуть ноль: multiply() // 0
 
 function multiply() {
-    if (arguments.length === 0) {
-        return 0;
-    }
-    let result = 1;
-    for (number of arguments) {
-        if (typeof(number) !== 'number' || isNaN(number)) {
-            alert('Incorrect argument: ' + number);
+    if (arguments.length) {
+        let result = 1;
+        for (number of arguments) {
+            if (typeof(number) !== 'number' || isNaN(number)) {
+                alert('Incorrect argument: ' + number);
+            }
+            result *= number;
         }
-        result *= number;
+        return result;
     }
-    return result;
+    return 0;
 }
 
 console.log(multiply(9,2));
@@ -28,11 +28,7 @@ console.log(reverseString('test'));
 // 3. Создать функцию, которая в качестве аргумента принимает строку из букв и возвращает строку, 
 // где каждый символ разделен пробелом и заменен на юникод-значение символа: 
 function getCodeStringFromText(str) {
-    let letters = str.split('');
-    let codes = letters.map(function(letter) {
-        return letter.charCodeAt(0);
-    })
-    return codes.join(' ');
+    return str.split('').map(letter => letter.charCodeAt(0)).join(' ')
 }
 console.log(getCodeStringFromText('hello'));
 
@@ -43,7 +39,7 @@ console.log(getCodeStringFromText('hello'));
 // Числа в строке указаны как пример вы подставляете реальные числа.
 
 function guessNumber(number) {
-    if (number > 10 || number < 0) {
+    if (number > 10 || number < 0 || typeof(number) !== 'number') {
         alert("Incorrect parameter");
     }
     let randomNumber = Math.round(Math.random() * 10);
@@ -84,7 +80,8 @@ console.log(doubleArray([1,2,3]));
 function changeCollection() {
     let result = [];
     for (argument of arguments) {
-        result.push(argument.slice(1))
+        let firstElem = argument.shift();
+        result.push(argument)
     }
     return result;
 }
@@ -99,23 +96,15 @@ function getUsers(users, field, value) {
     if (typeof(users) === undefined || typeof(field) === undefined || typeof(value) === undefined) {
         alert("Incorrect params");
     }
-    let result = [];
-    for (user of users) {
-        if (user[field] === value) {
-            result.push(user);
-        }
-    }
-    return result;
+    return users.filter(user => user[field] === value)
 }
 let users = [ {name: 'Denis', age: '29', gender: 'male'} , {name: 'Ivan', age: '20', gender: 'male'} ];
 console.log(getUsers(users, 'age', '20'));
 
 //9. Исходный массив [-2, 3, 4, -5, -6, 2, 4, -56]. Найдите количество отрицательных и положительных элементов
 function getEvenAndOddCount(numbers) {
-    let oddCnt = 0, evenCnt = 0;
-    for (number of numbers) {
-        number % 2 === 0 ? evenCnt++ : oddCnt++;
-    }
+    let evenCnt = numbers.filter(number => number % 2 === 0).length;
+    let oddCnt = numbers.length - evenCnt;
     return {odd: oddCnt, even: evenCnt}
 }
 console.log(getEvenAndOddCount([-2, 3, 4, -5, -6, 2, 4, -56]));
