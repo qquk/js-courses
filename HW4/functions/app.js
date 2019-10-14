@@ -50,7 +50,7 @@ console.log(transformArray(arr, reverseString));
 // массиве и весь массив. 
  
 function myEvery(arr, handler) {
-    if (!Array.isArray || typeof(handler) !== 'function') {
+    if (!Array.isArray(arr) || typeof(handler) !== 'function') {
         alert("Incorrect parameters");
     }
     for (let i = 0; i < arr.length; i++) {

@@ -22,7 +22,7 @@ console.log(getObjFromArray(arr))
  * @param {array} arr 
  */
 function checkForZero(arr) {
-    return arr.some(item => item === 0)
+    return !arr.some(item => item === 0)
 }
 
 console.log(checkForZero([12, 4, 50, 1, 0, 18, 40]))
@@ -61,7 +61,8 @@ let words = [{char:"a",index:12}, {char:"w",index:8}, {char:"Y",index:10}, {char
  * @param {array} arr 
  */
 function makeString(arr) {
-    return arr.sort((a, b) => a.index - b.index)
+    let newArr = [...arr];
+    return newArr.sort((a, b) => a.index - b.index)
            .reduce((str, letter) => str + letter.char, '');
 }
     
