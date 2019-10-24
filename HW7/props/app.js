@@ -47,8 +47,20 @@ let ul = document.querySelector('ul');
 ul.classList.add('list');
 
 //2. Найти в коде ссылку, находящуюся после списка ul, и добавить id=link
+// let a  = document.querySelector('ul ~ a').setAttribute('id', 'link');
 
-let a  = document.querySelector('ul ~ a').setAttribute('id', 'link');
+let elem = ul.nextSibling;
+if(elem) {
+   while(true) {
+        elem = elem.nextSibling;
+        if (elem && elem.nodeType === 1 && elem.tagName === 'A') {
+            elem.setAttribute('id', 'link');
+            break; 
+        }
+    } 
+}
+
+
 
 //3. На li через один (начиная с самого первого) установить класс “item”
 
