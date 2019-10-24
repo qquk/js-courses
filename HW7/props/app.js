@@ -50,15 +50,14 @@ ul.classList.add('list');
 // let a  = document.querySelector('ul ~ a').setAttribute('id', 'link');
 
 let elem = ul.nextSibling;
-if(elem) {
-   while(true) {
-        elem = elem.nextSibling;
-        if (elem && elem.nodeType === 1 && elem.tagName === 'A') {
-            elem.setAttribute('id', 'link');
-            break; 
-        }
-    } 
-}
+while(true) {
+    if (elem && elem.nodeType === 1 && elem.tagName === 'A') {
+        elem.setAttribute('id', 'link');
+        break;
+    }
+    elem = elem.nextSibling;
+} 
+
 
 
 
