@@ -23,10 +23,9 @@ function Planet(name) {
 function PlanetWithSatellite(name, satelliteName) {
     Planet.call(this, name);
     this.satelliteName = satelliteName;
-    let parentGetName = this.getName;
+    const parentGetName = this.getName();
     this.getName = function() {
-        let originalText = parentGetName.call(this);
-        return originalText + ' ' + 'The satellite is ' + this.satelliteName;
+        return parentGetName + ' ' + 'The satellite is ' + this.satelliteName;
     }
 }
 
@@ -61,11 +60,11 @@ console.log((new Building('Building', 5)).getFloors());
 function ApartmentBuilding(name, floors, flats) {
     Building.call(this, name, floors);
     this.flats = flats;
-    const parentGetFloors = this.getFloors;
+    const parentFloors = this.getFloors();
     this.getFloors = function() {
         return {
-            floors: parentGetFloors.call(this),
-            flats: parentGetFloors.call(this) * this.flats,
+            floors: parentFloors,
+            flats: parentFloors * this.flats,
         }
     }
 }
@@ -75,11 +74,11 @@ console.log((new ApartmentBuilding('Apartments', 5, 8)).getFloors());
 function ShoppingCenter(name, floors, magazines) {
     Building.call(this, name, floors);
     this.magazines = magazines;
-    const parentGetFloors = this.getFloors;
+    const parentFloors = this.getFloors();
     this.getFloors = function() {
         return {
-            floors: parentGetFloors.call(this),
-            magazines: parentGetFloors.call(this) * this.magazines,
+            floors: parentFloors,
+            magazines: parentFloors * this.magazines,
         }
     }
 }
@@ -111,11 +110,13 @@ function OfficeFurniture(name, price, color) {
     Furniture.call(this, name, price);
     this.color = color;
 }
-
-let oFurniture = new OfficeFurniture('desc', 50, 'black');
-oFurniture.getInfo = function() {
+OfficeFurniture.prototype = Object.create(Furniture.prototype);
+OfficeFurniture.prototype.constructor = OfficeFurniture;
+OfficeFurniture.prototype.getInfo = function() {
     return {...Furniture.prototype.getInfo.call(this), color: this.color};
 }
+
+let oFurniture = new OfficeFurniture('desc', 50, 'black');
 console.log(oFurniture.getInfo());
 
 function HomeFurniture(name, price, material) {
@@ -123,10 +124,13 @@ function HomeFurniture(name, price, material) {
     this.material = material;
 }
 
-let hFurniture = new HomeFurniture('sofa', 50, 'leather');
-hFurniture.getInfo = function() {
-    return {...Furniture.prototype.getInfo.call(this), material: this.material};
+HomeFurniture.prototype = Object.create(Furniture.prototype);
+HomeFurniture.prototype.constructor = OfficeFurniture;
+HomeFurniture.prototype.getInfo = function() {
+    return {...Furniture.prototype.getInfo.call(this), material: this.materia};
 }
+
+let hFurniture = new HomeFurniture('sofa', 50, 'leather');
 console.log(hFurniture.getInfo());
 
 
@@ -160,9 +164,11 @@ function Admin(name, registerDate, superAdmin) {
     this._superAdmin = superAdmin;
     
 }
+Admin.prototype = Object.create(User.prototype);
+Admin.prototype.constructor = Admin;
 
 Admin.prototype.getInfo = function() {
-    return {...User.prototype.getInfo.call(this), superAdmin: this._superAdmin};
+    return {name: this.name, registerDate: this.registerDate, superAdmin: this._superAdmin};
 }
 
 console.log((new Admin('q', '2019.10.29', true)).getInfo());
@@ -174,8 +180,11 @@ function Guest(name, registerDate, valid) {
     this._valid = valid;
 }
 
+Guest.prototype = Object.create(User.prototype);
+Guest.prototype.constructor = Guest;
+
 Guest.prototype.getInfo = function() {
-    return {...User.prototype.getInfo.call(this), valid: this._valid};
+    return {name: this.name, registerDate: this.registerDate, valid: this._valid};
 }
 
 console.log((new Guest('q', '2019.10.29', 2)).getInfo());
