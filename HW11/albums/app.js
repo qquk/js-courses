@@ -1,3 +1,8 @@
+// Практика
+// Сделать запрос к альбомам, получить их список, вывести на экран (в левой колонке на странице)
+// При клике на альбом делать запрос к фотографиям (которые в относятся к текущему альбому),
+// получать их список, вывести на экран (в правой колонке)
+
 const albumCount = document.getElementById('album-count');
 const photoCount = document.getElementById('photos-count');
 const albumTitle = document.getElementById('album-tile');
